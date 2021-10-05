@@ -1,7 +1,20 @@
 import random
-import math
+import time
 import quotes as q
 
+def user():
+    
+    player = []
+
+    players = input('How many player : ')
+    
+    for n in range(int(players)):
+
+        username = input('Player name : ')
+        
+        player.append(username)
+
+    return player
 
 def generate_number(level):
 
@@ -127,17 +140,17 @@ def answer(number,operator):
 
 point = 0
 
-def check_answer(answer,Answer):
+def check_answer(answer,Answer,time):
 
     global point
 
     if Answer == answer:
-        print('Correct')
+        print(f'Correct at {time} Sec')
 
         point = point + 20
 
     if Answer != answer:
-        print('Wrong')
+        print(f'Wrong at {time} Sec')
         point = point - 20
         if point <= 0:
             point = 0
@@ -147,8 +160,11 @@ def check_answer(answer,Answer):
         
 def leveling(point):#RW = Right or Wrong
 
+    #global level
     level = 1
 
+    if point <= 0:
+        level = 0
     if point > 0 and point <= 100:
         level = 1
     if point > 100 and point <= 200:
@@ -172,18 +188,44 @@ def leveling(point):#RW = Right or Wrong
     
     print(f'Point {point}, Level {level}')
 
-while point < 1000:
+    return level
 
-    level = 2
-    n = generate_number(level)
-    o = generate_operator(level)
-    c = check_num(n,o)
-    generate_equation(c,o)
-    a = answer(c,o)
-    b = get_answer()
-    p = check_answer(a,b)
-    l = leveling(p)
+def time_count():
+    start = time.time()
+    return start
+
+def exit_time(start):
+    end = time.time()
+    exits = end - start
     
-    if p == 0:
-        q.generate_quotes()
-        break
+    return round(exits,2)
+
+player = user()
+
+for n in range(len(player)):
+
+    t = time_count()
+    
+    print(player[n])
+
+    while point < 1000:
+
+        l = leveling(point)
+        n = generate_number(l)
+        o = generate_operator(l)
+        c = check_num(n,o)
+        
+        generate_equation(c,o)
+        a = answer(c,o)
+        b = get_answer()
+        e = exit_time(t)
+        p = check_answer(a,b,e)
+        
+        
+        if p == 0:
+            q.generate_quotes()
+            break
+
+        if e == 0:
+            break
+        
