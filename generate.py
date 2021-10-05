@@ -1,9 +1,17 @@
 import random
 import time
+import math
 import quotes as q
 
 def play():
-    play = input('Wanna play some fun game (y/n) : ')
+    play = input('Wanna play some fun game (Y/N) : ')
+    try:
+        int(play)
+    except:
+        try:
+            float(play)
+        except:
+            play.lower()
 
     return play
 
@@ -20,6 +28,7 @@ def user():
         player.append(username)
 
     return player
+
 
 def generate_number(level):
 
@@ -104,8 +113,35 @@ def check_num(number,operator):
             temp = random.randint(1,3)
             number[1] = temp
 
-    #print(number)
     return number
+
+def bonus_equation(number):
+    bonus_list = ['Factorial','Sqrt']
+    s = random.randint(0,1)
+
+    if number[0] > 10:
+        temp = random.randint(1,10)
+        number[0] = temp
+
+    Equation = f'{bonus_list[s]} {number[0]} = (0 Round down digit Answer)'
+
+    print(Equation)
+    return bonus_list[s]
+
+def bonus_ans(number,symbol):
+
+    letter = ['Keys']
+    answer = 0
+
+    if symbol == 'Factorial':
+        answer = math.factorial(number[0])
+    if symbol == 'Sqrt':
+        answer = math.sqrt(number[0])
+
+    letter.append(int(math.floor(answer)))
+
+    #print(letter)
+    return letter
 
 def generate_equation(number,operate):
 
@@ -117,7 +153,7 @@ def generate_equation(number,operate):
 
 def get_answer():
 
-    Answer = input('Answer :')
+    Answer = input('Answer : ')
 
     try:
         Ans = int(Answer)
@@ -129,7 +165,7 @@ def get_answer():
             
     return Ans
 
-def answer(number,operator):
+def answer(number,operator,letter):
     if operator == '+':
         answer = number[0] + number[1]
     if operator == '-':
@@ -140,6 +176,12 @@ def answer(number,operator):
         answer = number[0] / number[1]
     if operator == '^':
         answer = number[0] ^ number[1]
+
+    if letter[0] == 'Keys':
+        answer = letter[1]
+    
+    if letter[0] != 'Keys':
+        pass
 
     return int(answer)
 
@@ -165,6 +207,7 @@ def check_answer(answer,Answer,time):
 
     if Answer != answer:
         check = False
+        print(f'Correct answer is {Answer} ')
         #print(f'Wrong at {time} Sec')
 
     #print(check)
@@ -243,24 +286,39 @@ def exit_time(start):
     
     return round(exits,2)
 
-def game():
+file = open('rule.txt')
+print(file.read())
+file.close()
+print('='*50)
 
+def game():
+    
     player = user()
 
     for n in range(len(player)):
 
         t = time_count()
         
-        print(player[n])
+        print(f'Hi {player[n]} have fun')
 
         while point < 1000:
+
+            luck = random.uniform(1,100)
 
             l = leveling(point)
             n = generate_number(l)
             o = generate_operator(l)
             cn = check_num(n,o)
-            generate_equation(cn,o)
-            a = answer(cn,o)
+
+            if luck < 80:
+                generate_equation(cn,o)
+                le = ['key']
+
+            if luck >= 80:
+                sy = bonus_equation(cn)
+                le = bonus_ans(cn,sy)
+
+            a = answer(cn,o,le)
             possible_answer(a)
             b = get_answer()
             e = exit_time(t)
@@ -268,6 +326,7 @@ def game():
             ad = add_point(ca)
             h = Health(ca)
             
+        
             if len(h) == 0:
                 break
 
@@ -284,8 +343,9 @@ def game():
     print('='*50)
 
 wp = play()
-if wp == 'y' or wp == 'Y':
+if wp == 'y':
     game()
+    
 else:
     print('See ya')
 
