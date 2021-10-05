@@ -2,6 +2,11 @@ import random
 import time
 import quotes as q
 
+def play():
+    play = input('Wanna play some fun game (y/n) : ')
+
+    return play
+
 def user():
     
     player = []
@@ -104,7 +109,7 @@ def check_num(number,operator):
 
 def generate_equation(number,operate):
 
-    Equation = f'{number[0]} {operate} {number[1]}'
+    Equation = f'{number[0]} {operate} {number[1]} = '
 
     print(Equation)
 
@@ -147,29 +152,42 @@ def possible_answer(answer):
     f2 = answer - (random.randint(0,2))
     random_answer.append(f2)
 
-    print(random_answer)
+    #print(random_answer)
     return random_answer
-
-point = 0
 
 def check_answer(answer,Answer,time):
 
-    global point
+    check = True
 
     if Answer == answer:
-        print(f'Correct at {time} Sec')
-
-        point = point + 20
+        check = True
+        #print(f'Correct at {time} Sec')
 
     if Answer != answer:
-        print(f'Wrong at {time} Sec')
-        point = point - 20
-        if point <= 0:
-            point = 0
+        check = False
+        #print(f'Wrong at {time} Sec')
 
-    #print(point)
-    return point 
-        
+    #print(check)
+    return check
+
+
+point = 0
+
+def add_point(check):
+
+    global point
+
+    if check == True:
+        point = point + 20
+    
+    if check == False:
+        point = point - 20
+        if point < 0:
+            point = 0
+        pass
+
+    return point
+
 def leveling(point):#RW = Right or Wrong
 
     #global level
@@ -202,6 +220,19 @@ def leveling(point):#RW = Right or Wrong
 
     return level
 
+health = ['*','*','*','*','*','*']
+
+def Health(ca):
+    
+    if ca == False:
+        del health[0]
+    else:
+        pass
+
+    print(f'HEALTH : {health}')
+
+    return health
+
 def time_count():
     start = time.time()
     return start
@@ -212,32 +243,49 @@ def exit_time(start):
     
     return round(exits,2)
 
-player = user()
+def game():
 
-for n in range(len(player)):
+    player = user()
 
-    t = time_count()
+    for n in range(len(player)):
+
+        t = time_count()
+        
+        print(player[n])
+
+        while point < 1000:
+
+            l = leveling(point)
+            n = generate_number(l)
+            o = generate_operator(l)
+            cn = check_num(n,o)
+            generate_equation(cn,o)
+            a = answer(cn,o)
+            possible_answer(a)
+            b = get_answer()
+            e = exit_time(t)
+            ca = check_answer(a,b,e)
+            ad = add_point(ca)
+            h = Health(ca)
+            
+            if len(h) == 0:
+                break
+
+            if ad < 0:
+                q.generate_quotes()
+                break
+
+            if e == 0:
+                break
+
+            print('='*50)
     
-    print(player[n])
+    print('Game Has been over now')
+    print('='*50)
 
-    while point < 1000:
+wp = play()
+if wp == 'y' or wp == 'Y':
+    game()
+else:
+    print('See ya')
 
-        l = leveling(point)
-        n = generate_number(l)
-        o = generate_operator(l)
-        c = check_num(n,o)
-        generate_equation(c,o)
-        a = answer(c,o)
-        possible_answer(a)
-        b = get_answer()
-        e = exit_time(t)
-        p = check_answer(a,b,e)
-        
-        
-        if p == 0:
-            q.generate_quotes()
-            break
-
-        if e == 0:
-            break
-        
