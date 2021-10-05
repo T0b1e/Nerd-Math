@@ -123,7 +123,7 @@ def bonus_equation(number):
         temp = random.randint(1,10)
         number[0] = temp
 
-    Equation = f'{bonus_list[s]} {number[0]} = (0 Round down digit Answer)'
+    Equation = f'{bonus_list[s]} {number[0]} = (!Round down digit Answer!)'
 
     print(Equation)
     return bonus_list[s]
@@ -201,7 +201,7 @@ def check_answer(answer,Answer,time):
 
     check = True
 
-    if Answer == answer:
+    if Answer == answer:     
         check = True
         #print(f'Correct at {time} Sec')
 
@@ -213,6 +213,24 @@ def check_answer(answer,Answer,time):
     #print(check)
     return check
 
+row = []
+
+def boost(check):
+
+    global row
+    
+    key_lock = []
+    
+    row.append(check)
+    
+    if row.count(True) == 10:
+        key_lock.append('keys')
+    else:
+        key_lock.append('key')
+
+    print(row,key_lock)
+
+    return key_lock
 
 point = 0
 
@@ -265,8 +283,13 @@ def leveling(point):#RW = Right or Wrong
 
 health = ['*','*','*','*','*','*']
 
-def Health(ca):
+def Health(ca,boost):
     
+    if boost[0] == 'keys':
+        health.append('*')
+    if boost[0] != 'keys':
+        pass
+
     if ca == False:
         del health[0]
     else:
@@ -324,8 +347,9 @@ def game():
             e = exit_time(t)
             ca = check_answer(a,b,e)
             ad = add_point(ca)
-            h = Health(ca)
-            
+            bo = boost(ca)
+ 
+            h = Health(ca,bo)
         
             if len(h) == 0:
                 break
@@ -345,7 +369,7 @@ def game():
 wp = play()
 if wp == 'y':
     game()
-    
+
 else:
     print('See ya')
 
