@@ -138,6 +138,18 @@ def answer(number,operator):
 
     return int(answer)
 
+def possible_answer(answer):
+
+    random_answer = []
+    
+    f1 = answer + (random.randint(0,2))
+    random_answer.append(f1)
+    f2 = answer - (random.randint(0,2))
+    random_answer.append(f2)
+
+    print(random_answer)
+    return random_answer
+
 point = 0
 
 def check_answer(answer,Answer,time):
@@ -214,9 +226,9 @@ for n in range(len(player)):
         n = generate_number(l)
         o = generate_operator(l)
         c = check_num(n,o)
-        
         generate_equation(c,o)
         a = answer(c,o)
+        possible_answer(a)
         b = get_answer()
         e = exit_time(t)
         p = check_answer(a,b,e)
