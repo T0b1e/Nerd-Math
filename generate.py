@@ -115,7 +115,7 @@ def check_num(number,operator):
 
     return number
 
-def bonus_equation(number):
+def bonus_equation(number,No):
     bonus_list = ['Factorial','Sqrt']
     s = random.randint(0,1)
 
@@ -123,7 +123,10 @@ def bonus_equation(number):
         temp = random.randint(1,10)
         number[0] = temp
 
-    Equation = f'{bonus_list[s]} {number[0]} = (!Round down digit Answer!)'
+    if bonus_list[s] == 'Factorial':
+        Equation = f'{No}: {bonus_list[s]} {number[0]} = '
+    if bonus_list[s] == 'Sqrt':
+        Equation = f'{No}: {bonus_list[s]} {number[0]} = (!Round down digit Answer!)'
 
     print(Equation)
     return bonus_list[s]
@@ -143,9 +146,9 @@ def bonus_ans(number,symbol):
     #print(letter)
     return letter
 
-def generate_equation(number,operate):
+def generate_equation(number,operate,No):
 
-    Equation = f'{number[0]} {operate} {number[1]} = '
+    Equation = f'{No}: {number[0]} {operate} {number[1]} = '
 
     print(Equation)
 
@@ -166,6 +169,7 @@ def get_answer():
     return Ans
 
 def answer(number,operator,letter):
+
     if operator == '+':
         answer = number[0] + number[1]
     if operator == '-':
@@ -188,26 +192,28 @@ def answer(number,operator,letter):
 def possible_answer(answer):
 
     random_answer = []
-    
+    random_answer.append(answer)
+
     f1 = answer + (random.randint(0,2))
     random_answer.append(f1)
     f2 = answer - (random.randint(0,2))
     random_answer.append(f2)
 
-    #print(random_answer)
+    random.shuffle(random_answer)
+
     return random_answer
 
 def check_answer(answer,Answer,time):
 
     check = True
 
-    if Answer == answer:     
+    if int(Answer) == int(answer):     
         check = True
         #print(f'Correct at {time} Sec')
 
-    if Answer != answer:
+    if int(Answer) != int(answer):
         check = False
-        print(f'Correct answer is {Answer} ')
+        print(f'Correct answer is {answer} ')
         #print(f'Wrong at {time} Sec')
 
     #print(check)
@@ -225,10 +231,12 @@ def boost(check):
     
     if row.count(True) == 10:
         key_lock.append('keys')
+        row.clear()
+
     else:
         key_lock.append('key')
 
-    print(row,key_lock)
+    #print(row,key_lock)
 
     return key_lock
 
@@ -281,6 +289,30 @@ def leveling(point):#RW = Right or Wrong
 
     return level
 
+def rank(level):
+    if level == 1:
+        rank = 'Bronze 1'
+    if level == 2:
+        rank = 'Bronze 2'
+    if level == 3:
+        rank = 'Silver 1'
+    if level == 4:
+        rank = 'Silver 2'
+    if level == 5:
+        rank = 'Silver 3'
+    if level == 6:
+        rank = 'Gold 1'
+    if level == 7:
+        rank = 'Gold 2'
+    if level == 8:
+        rank = 'Gold 3'
+    if level == 9:
+        rank = 'Platinum 1'
+    if level == 10:
+        rank = 'Platinum 2'
+
+    return rank
+
 health = ['*','*','*','*','*','*']
 
 def Health(ca,boost):
@@ -314,6 +346,8 @@ print(file.read())
 file.close()
 print('='*50)
 
+no = 1
+
 def game():
     
     player = user()
@@ -326,20 +360,29 @@ def game():
 
         while point < 1000:
 
+            global no
+
             luck = random.uniform(1,100)
 
             l = leveling(point)
             n = generate_number(l)
             o = generate_operator(l)
             cn = check_num(n,o)
+            generate_equation(cn,o,no)
+            no += 1
 
-            if luck < 80:
-                generate_equation(cn,o)
+            if len(health) <= 3:
+
+                if luck < 80:
+                    le = ['key']
+
+                if luck >= 80:
+                    sy = bonus_equation(cn,no)
+                    no += 1
+                    le = bonus_ans(cn,sy)
+
+            if len(health) > 3:
                 le = ['key']
-
-            if luck >= 80:
-                sy = bonus_equation(cn)
-                le = bonus_ans(cn,sy)
 
             a = answer(cn,o,le)
             possible_answer(a)
@@ -349,7 +392,7 @@ def game():
             ad = add_point(ca)
             bo = boost(ca)
  
-            h = Health(ca,bo)
+            h = Health(ca,bo)    
         
             if len(h) == 0:
                 break
@@ -362,6 +405,8 @@ def game():
                 break
 
             print('='*50)
+
+            
     
     print('Game Has been over now')
     print('='*50)
