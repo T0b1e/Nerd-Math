@@ -4,7 +4,7 @@ import math
 import quotes as q
 
 def play():
-    play = input('Wanna play some fun game (Y/N) : ')
+    play: str = input('Wanna play some fun game (Y/N) : ')
     try:
         int(play)
     except:
@@ -15,8 +15,9 @@ def play():
 
     return play
 
+
 def user():
-    
+
     player = []
 
     players = input('How many player : ')
@@ -30,74 +31,77 @@ def user():
     return player
 
 
-def generate_number(level):
+def generate_number(rank):
 
     number = []
 
-    if level == 0:
-        n = 10
-    if level == 1:
-        n = 10
-    if level == 2:
-        n = 20
-    if level == 3:
-        n = 30
-    if level == 4:
-        n = 30
-    if level == 5:
-        n = 40
-    if level == 6:
-        n = 50
-    if level == 7:
-        n = 60
-    if level == 8:
-        n = 80
-    if level == 9:
-        n = 100
-    if level == 10:
-        n = 100
+    if rank == 'Bronze 1':
+        Limit = 10
+    if rank == 'Bronze 2':
+        Limit = 15
+    if rank == 'Silver 1':
+        Limit = 20
+    if rank == 'Silver 2':
+        Limit = 25
+    if rank == 'Silver 3':
+        Limit = 30
+    if rank == 'Gold 1':
+        Limit = 35
+    if rank == 'Gold 2':
+        Limit = 40
+    if rank == 'Gold 3':
+        Limit = 45
+    if rank == 'Platinum 1':
+        Limit = 50
+    if rank == 'Platinum 2':
+        Limit = 55
+    if rank == 'Platinum 3':
+        Limit = 80
+    else:
+        pass
         
     for x in range(2):
-        num = random.randint(1,n)
+        num = random.randint(1, Limit)
         number.append(num)
 
     return number
 
-def generate_operator(level):
 
-    operator_list = ['+','-','*','/','^','!']
+def generate_operator(rank):
+
+    operator_list = ['+', '-', '*', '/', '^', '!']
 
     for X in range(10):
 
-        if level == 0:
-            o = 0
-        if level == 1:
-            o = 1
-        if level == 2:
-            o = 2
-        if level == 3:
-            o = 2
-        if level == 4:
-            o = 3
-        if level == 5:
-            o = 3
-        if level == 6:
-            o = 3
-        if level == 7:
-            o = 3
-        if level == 8:
-            o = 4
-        if level == 9:
-            o = 4
-        if level == 10:
-            o = 4
+        if rank == 'Bronze 1':
+            Limit = 0
+        if rank == 'Bronze 2':
+            Limit = 1
+        if rank == 'Silver 1':
+            Limit = 2
+        if rank == 'Silver 2':
+            Limit = 2
+        if rank == 'Silver 3':
+            Limit = 3
+        if rank == 'Gold 1':
+            Limit = 3
+        if rank == 'Gold 2':
+            Limit = 3
+        if rank == 'Gold 3':
+            Limit = 3
+        if rank == 'Platinum 1':
+            Limit = 4
+        if rank == 'Platinum 2':
+            Limit = 4
+        if rank == 'Platinum 3':
+            Limit = 4
 
-        operate = operator_list[random.randint(0,o)]
+        operate = operator_list[random.randint(0,Limit)]
     
-    #print(operate)
     return operate
 
-def check_num(number,operator):
+
+def check_num(number, operator):
     if operator == '+':
         pass
     if operator == '-':
@@ -106,7 +110,7 @@ def check_num(number,operator):
         pass
     if operator == '/':
         if number[1] == 0:
-            temp = random.randint(1,10) #NEED TO FIX
+            temp = random.randint(1,10)  # NEED TO FIX
             number[1] = temp
     if operator == '^':
         if number[1] > 3:
@@ -115,7 +119,8 @@ def check_num(number,operator):
 
     return number
 
-def bonus_equation(number,No):
+
+def bonus_equation(number, No):
     bonus_list = ['Factorial','Sqrt']
     s = random.randint(0,1)
 
@@ -131,9 +136,11 @@ def bonus_equation(number,No):
     print(Equation)
     return bonus_list[s]
 
-def bonus_ans(number,symbol):
+
+def bonus_ans(number, symbol):
 
     letter = ['Keys']
+
     answer = 0
 
     if symbol == 'Factorial':
@@ -143,16 +150,17 @@ def bonus_ans(number,symbol):
 
     letter.append(int(math.floor(answer)))
 
-    #print(letter)
     return letter
 
-def generate_equation(number,operate,No):
+
+def generate_equation(number, operate, No):
 
     Equation = f'{No}: {number[0]} {operate} {number[1]} = '
 
     print(Equation)
 
     return Equation
+
 
 def get_answer():
 
@@ -168,7 +176,8 @@ def get_answer():
             
     return Ans
 
-def answer(number,operator,letter):
+
+def answer(number, operator, letter):
 
     if operator == '+':
         answer = number[0] + number[1]
@@ -192,6 +201,7 @@ def answer(number,operator,letter):
 def possible_answer(answer):
 
     random_answer = []
+
     random_answer.append(answer)
 
     f1 = answer + (random.randint(0,2))
@@ -203,23 +213,23 @@ def possible_answer(answer):
 
     return random_answer
 
-def check_answer(answer,Answer,time):
+
+def check_answer(answer, Answer):
 
     check = True
 
     if int(Answer) == int(answer):     
         check = True
-        #print(f'Correct at {time} Sec')
 
     if int(Answer) != int(answer):
         check = False
         print(f'Correct answer is {answer} ')
-        #print(f'Wrong at {time} Sec')
 
-    #print(check)
     return check
 
+
 row = []
+
 
 def boost(check):
 
@@ -236,11 +246,11 @@ def boost(check):
     else:
         key_lock.append('key')
 
-    #print(row,key_lock)
-
     return key_lock
 
+
 point = 0
+
 
 def add_point(check):
 
@@ -257,10 +267,42 @@ def add_point(check):
 
     return point
 
-def leveling(point):#RW = Right or Wrong
+rank = 'Iron'
 
-    #global level
+def rank(point, level): # RW = Right or Wrong
+
+    if point <= 0:
+        rank = 'Bronze 1'
+    if point > 0 and point <= 160:
+        rank = 'Bronze 2'
+    if point > 160 and point <= 320:
+        rank = 'Silver 1'
+    if point > 320 and point <= 480:
+        rank = 'Silver 2'
+    if point > 480 and point <= 640:
+        rank = 'Silver 3'
+    if point > 640 and point <= 800:
+        rank = 'Gold 1'
+    if point > 800 and point <= 960:
+        rank = 'Gold 2'
+    if point > 960 and point <= 1120:
+        rank = 'Gold 3'
+    if point > 1120 and point <= 1280:
+        rank = 'Platinum 1'
+    if point > 1280 and point <= 1440:
+        rank = 'Platinum 2'
+    if point > 1440 and point < 1600:
+        rank = 'Platinum 3'
+    
+    print(f'Point {point},Ranking {rank},Level {level[0]}')
+
+    return rank
+
+
+def leveling(point):
+
     level = 1
+    levels = []
 
     if point <= 0:
         level = 0
@@ -285,38 +327,21 @@ def leveling(point):#RW = Right or Wrong
     if point > 900 and point < 1000:
         level = 10
     
-    print(f'Point {point}, Level {level}')
+    levels.append(level)
 
-    return level
+    if len(levels) == 2:
+        del levels[0]
 
-def rank(level):
-    if level == 1:
-        rank = 'Bronze 1'
-    if level == 2:
-        rank = 'Bronze 2'
-    if level == 3:
-        rank = 'Silver 1'
-    if level == 4:
-        rank = 'Silver 2'
-    if level == 5:
-        rank = 'Silver 3'
-    if level == 6:
-        rank = 'Gold 1'
-    if level == 7:
-        rank = 'Gold 2'
-    if level == 8:
-        rank = 'Gold 3'
-    if level == 9:
-        rank = 'Platinum 1'
-    if level == 10:
-        rank = 'Platinum 2'
+    return levels
 
-    return rank
 
-health = ['*','*','*','*','*','*']
+health = ['*', '*', '*', '*', '*', '*']  # Start at 6 hearth
 
-def Health(ca,boost):
-    
+
+def healths(ca, boost):
+
+    global health
+
     if boost[0] == 'keys':
         health.append('*')
     if boost[0] != 'keys':
@@ -331,9 +356,11 @@ def Health(ca,boost):
 
     return health
 
+
 def time_count():
     start = time.time()
     return start
+
 
 def exit_time(start):
     end = time.time()
@@ -341,12 +368,25 @@ def exit_time(start):
     
     return round(exits,2)
 
-file = open('rule.txt')
+
+def game_over(Health, No, Time, Level, Ranking):  # No, Time,Level ,Ranking
+
+    gameovertime = time.time()
+
+    time_using = Time - gameovertime
+
+    if len(Health) <= 0:
+        print(f'Game Over,You have been reach Ranking : {Ranking} and Level : {Level} by doing {No} and using {round(time_using)} sec to ')
+
+    return None
+
+file = open('rule.txt') #Open file rule.txt
 print(file.read())
 file.close()
 print('='*50)
 
 no = 1
+
 
 def game():
     
@@ -364,41 +404,43 @@ def game():
 
             luck = random.uniform(1,100)
 
-            l = leveling(point)
-            n = generate_number(l)
-            o = generate_operator(l)
-            cn = check_num(n,o)
-            generate_equation(cn,o,no)
+            l = leveling(point)  # Global point
+            r = rank(point, l)  # Global point
+            n = generate_number(r)  # Ranking
+            o = generate_operator(r)  # Rainking
+            cn = check_num(n, o)  # Number, Operator
+            generate_equation(cn, o, no)  # Number, Operator, No
             no += 1
 
             if len(health) <= 3:
 
-                if luck < 80:
+                if luck < 90:
                     le = ['key']
 
-                if luck >= 80:
-                    sy = bonus_equation(cn,no)
+                if luck >= 90:
+                    sy = bonus_equation(cn, no)
                     no += 1
-                    le = bonus_ans(cn,sy)
+                    le = bonus_ans(cn, sy)
 
             if len(health) > 3:
                 le = ['key']
 
-            a = answer(cn,o,le)
-            possible_answer(a)
+            a = answer(cn, o, le)  # Number, Operator, key
+            possible_answer(a)  # Answer
             b = get_answer()
-            e = exit_time(t)
-            ca = check_answer(a,b,e)
-            ad = add_point(ca)
-            bo = boost(ca)
+            e = exit_time(t)  # Start time
+            ca = check_answer(a, b)  # Answer, Get_answer
+            ad = add_point(ca)  # Check_answer
+            bo = boost(ca)  # Check_answer
  
-            h = Health(ca,bo)    
+            h = healths(ca, bo)  # Check_answer, boost
         
             if len(h) == 0:
+                game_over(h, no, t, l, r)  # (Health,No,Time,Level,Ranking):
                 break
 
             if ad < 0:
-                q.generate_quotes()
+                q.generate_quotes()  # Quotes
                 break
 
             if e == 0:
@@ -411,7 +453,7 @@ def game():
     print('Game Has been over now')
     print('='*50)
 
-wp = play()
+wp : str = play()
 if wp == 'y':
     game()
 

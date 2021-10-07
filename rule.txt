@@ -1,0 +1,10 @@
+RULE!
+
+1. First you will have 0 point and level 0
+    If you answer correct answer your will get 20 point,
+    when you get upper level the number will be harder and harder
+2. If you think it Decimal then round it down
+
+Made from Mr.Narongkorn Kitrungrot
+Created fir Education and Entertain
+If you find bug or Error pls Contact me at 'psuwit.narongkron.nk@gmail.com'
