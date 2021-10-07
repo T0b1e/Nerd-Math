@@ -380,6 +380,11 @@ def game_over(Health, No, Time, Level, Ranking):  # No, Time,Level ,Ranking
 
     return None
 
+def try_again():
+    trys = input('Wanna play again (y/n) : ')
+    
+    return trys
+
 file = open('rule.txt') #Open file rule.txt
 print(file.read())
 file.close()
@@ -453,10 +458,15 @@ def game():
     print('Game Has been over now')
     print('='*50)
 
+try_again()
+if try_again == 'y':
+    game()
+
 wp : str = play()
 if wp == 'y':
     game()
 
 else:
-    print('See ya')
+    print('See ya Have an nice day')
+
 
