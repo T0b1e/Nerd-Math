@@ -393,9 +393,12 @@ print('='*50)
 no = 1
 
 
-def game():
+def main():
     
     player = user()
+    print('..... Loading user data .....')
+    time.sleep(2)
+    print('='*50)
 
     for n in range(len(player)):
 
@@ -458,13 +461,12 @@ def game():
     print('Game Has been over now')
     print('='*50)
 
-try_again()
-if try_again == 'y':
-    game()
+if __name__ == 'main':
+    main()
 
 wp : str = play()
 if wp == 'y':
-    game()
+    main()
 
 else:
     print('See ya Have an nice day')
